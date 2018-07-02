@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import Menu from './components/MenuComponent';
+import Menu from './components/MenuFunctionComponent'; 
 import Header from './components/HeaderComponent';
-import Footer from './components/FooterComponent';
-
 import {Navbar, NavbarBrand} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 import {DISHES} from './shared/dishes';
 
-class App extends Component {
+class MainComponent extends Component {
     constructor(props){
         super(props);
         
         this.state = {
-            dishes : DISHES
+            dishes : DISHES,
+            selectedDish : null
         };
+    }
+    onDishSelect(dishId){
+        this.setState({selectedDish : dishId});
     }
   render() {
     return (
       <div >
         <Header/>
-        <Menu dishes = {this.state.dishes} />
-        <Footer />
+         
+        <Menu dishes = {this.state.dishes} 
+        onClick = { (dishId) => this.onDishSelect(dish) }/>
       </div>
     );
   }
