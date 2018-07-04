@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import Menu from './components/MenuFunctionComponent'; 
-import Header from './components/HeaderComponent';
+import Menu from './MenuComponent';
+import Header from './HeaderComponent';
+import Footer from './FooterComponent';
+import Contact from './ContactComponent';
+import {BrowserRouter } from 'react-router-dom';
+import Home from './HomeComponent';
+import {Switch,Route,Redirect} from 'react-router-dom';
+import {DISHES} from '../shared/dishes';
+import { COMMENTS} from '../shared/comments';
+import {LEADERS} from '../shared/leaders';
+import {PROMOTIONS} from '../shared/promotions';
+
 import {Navbar, NavbarBrand} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css';
-import {DISHES} from './shared/dishes';
+
+
 
 class MainComponent extends Component {
     constructor(props){
@@ -13,22 +22,33 @@ class MainComponent extends Component {
         
         this.state = {
             dishes : DISHES,
-            selectedDish : null
+            comments : COMMENTS,
+            leaders : LEADERS,
+            promotions : PROMOTIONS
         };
     }
-    onDishSelect(dishId){
-        this.setState({selectedDish : dishId});
-    }
   render() {
+    const HomePage = () => {
+        return(
+            <Home dish = {this.state.dishes.filter((dish) => dish.featured)[0]} promotion = {this.state.promotions.filter((promo) => promo.featured)[0]}
+            leader = {this.state.leaders.filter((leader) => leader.featured)[0]}
+      />
+        );
+    }
     return (
       <div >
         <Header/>
-         
-        <Menu dishes = {this.state.dishes} 
-        onClick = { (dishId) => this.onDishSelect(dish) }/>
+        <Switch>
+            <Route path="/home" component = {HomePage} />
+            <Route exact path = "/menu" component = {() => <Menu dishes = {this.props.dishes} />} />
+            <Route exact path = "/contactus"  component = {Contact} />
+            <Redirect to = "/home" />
+        </Switch>
+        
+        <Footer />
       </div>
     );
   }
 }
 
-export default App;
+export default MainComponent;

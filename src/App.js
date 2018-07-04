@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import Menu from './components/MenuComponent';
-import Header from './components/HeaderComponent';
+import Main from './components/MainComponent';
 import Footer from './components/FooterComponent';
+import {BrowserRouter } from 'react-router-dom'
 
 import {Navbar, NavbarBrand} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -19,11 +20,11 @@ class App extends Component {
     }
   render() {
     return (
+    <BrowserRouter>
       <div >
-        <Header/>
-        <Menu dishes = {this.state.dishes} />
-        <Footer />
+        <Main  dishes = {this.state.dishes}/>
       </div>
+    </BrowserRouter>
     );
   }
 }
